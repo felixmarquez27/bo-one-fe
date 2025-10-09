@@ -1,0 +1,7 @@
+# Dist
+node_modules
+
+# IDE
+
+!.vscode/extensions.json
+

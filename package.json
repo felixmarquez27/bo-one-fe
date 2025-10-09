@@ -1,0 +1,20 @@
+{
+    "name": "claro-admin",
+    "private": true,
+    "workspaces": [
+        "shell",
+        "users"
+    ],
+    "scripts": {
+        "dev": "concurrently \"npm run dev --workspace=users\" \"npm run dev --workspace=shell\""
+    },
+    "devDependencies": {
+        "@biomejs/biome": "2.2.3",
+        "@module-federation/rsbuild-plugin": "^0.19.1",
+        "@rsbuild/core": "^1.5.14",
+        "@rsbuild/plugin-react": "^1.4.1",
+        "@types/react": "^19.2.2",
+        "@types/react-dom": "^19.2.1",
+        "concurrently": "^9.2.1"
+    }
+}
