@@ -1,0 +1,42 @@
+version: '3.8'
+
+# Desarrollo - Ejecutar desde la raíz: docker compose -f docker-compose.dev.yml up -d --build
+
+services:
+  shell-dev:
+    build:
+      context: .
+      dockerfile: apps/shell/Dockerfile.dev
+    container_name: bo-one-shell-dev
+    ports:
+      - "2000:2000"
+    volumes:
+      - ./apps/shell/src:/app/apps/shell/src
+      - ./styles:/app/styles
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+      - USERS_URL=http://localhost:2001
+    networks:
+      - bo-one-network
+
+  users-dev:
+    build:
+      context: .
+      dockerfile: apps/users/Dockerfile.dev
+    container_name: bo-one-users-dev
+    ports:
+      - "2001:2001"
+    volumes:
+      - ./apps/users/src:/app/apps/users/src
+      - ./styles:/app/styles
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+    networks:
+      - bo-one-network
+
+networks:
+  bo-one-network:
+    driver: bridge
+

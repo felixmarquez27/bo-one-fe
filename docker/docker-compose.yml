@@ -1,0 +1,62 @@
+version: '3.8'
+
+services:
+  # Aplicación Shell (Host)
+  shell:
+    build:
+      context: ..
+      dockerfile: apps/shell/Dockerfile
+    container_name: bo-one-shell
+    ports:
+      - "3000:80"
+    environment:
+      - USERS_URL=http://users/mf-manifest.json
+    networks:
+      - bo-one-network
+    depends_on:
+      - users
+    restart: unless-stopped
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.shell.rule=Host(`shell.localhost`)"
+      - "traefik.http.services.shell.loadbalancer.server.port=80"
+
+  # Aplicación Users (Remote)
+  users:
+    build:
+      context: ..
+      dockerfile: apps/users/Dockerfile
+    container_name: bo-one-users
+    ports:
+      - "3001:80"
+    networks:
+      - bo-one-network
+    restart: unless-stopped
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.users.rule=Host(`users.localhost`)"
+      - "traefik.http.services.users.loadbalancer.server.port=80"
+
+  # Nginx Reverse Proxy (Opcional)
+  nginx-proxy:
+    image: nginx:alpine
+    container_name: bo-one-proxy
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx-proxy.conf:/etc/nginx/conf.d/default.conf
+    networks:
+      - bo-one-network
+    depends_on:
+      - shell
+      - users
+    restart: unless-stopped
+
+networks:
+  bo-one-network:
+    driver: bridge
+
+volumes:
+  shell-data:
+  users-data:
+

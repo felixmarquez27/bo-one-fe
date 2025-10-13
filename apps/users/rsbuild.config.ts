@@ -6,6 +6,12 @@ export default defineConfig({
   server: {
     port: 2001,
   },
+  
+  source: {
+    define: {
+      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),
+    },
+  },
 
   plugins: [
     pluginReact(),
@@ -19,7 +25,7 @@ export default defineConfig({
         react: { singleton: true, eager: true, requiredVersion: '^19.2.0' },
         'react-dom': { singleton: true, eager: true, requiredVersion: '^19.2.0' },
       },
-      manifest: true, // genera mf-manifest.json automáticamente
+      manifest: true,
     }),
   ],
 

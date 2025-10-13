@@ -1,0 +1,31 @@
+# Dockerfile para desarrollo con hot-reload
+FROM node:20-alpine
+
+WORKDIR /app
+
+# Copiar archivos de configuración
+COPY package*.json ./
+COPY tsconfig.json ./
+COPY postcss.config.mjs ./
+COPY tailwind.config.js ./
+
+# Copiar estilos y types
+COPY styles ./styles
+COPY types ./types
+
+# Copiar configuración de users
+COPY apps/users/package*.json ./apps/users/
+COPY apps/users/rsbuild.config.ts ./apps/users/
+
+# Instalar dependencias desde la raíz (workspace)
+RUN npm ci --legacy-peer-deps
+
+# Exponer puerto
+EXPOSE 2001
+
+# Mantener workdir en la raíz para usar workspace
+WORKDIR /app
+
+# El código fuente se monta como volumen
+CMD ["npm", "run", "dev", "--workspace=apps/users"]
+
