@@ -1,0 +1,37 @@
+// packages/ui/tsconfig.json
+{
+    "compilerOptions": {
+        "target": "es2020",
+        "useDefineForClassFields": true,
+        "lib": [
+            "es2020",
+            "dom",
+            "dom.iterable"
+        ],
+        "module": "esnext",
+        "skipLibCheck": true,
+        // Configuración clave para los alias del paquete 'ui'
+        "baseUrl": "./src",
+        "paths": {
+            // Mapea el alias 'ui-lib' a la carpeta 'src' del paquete.
+            "ui-lib/*": [
+                "./*"
+            ]
+        },
+        /* Bundler mode */
+        "moduleResolution": "bundler",
+        "allowImportingTsExtensions": true,
+        "resolveJsonModule": true,
+        "isolatedModules": true,
+        "noEmit": true,
+        "jsx": "react-jsx",
+        /* Linting */
+        "strict": true,
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+        "noFallthroughCasesInSwitch": true
+    },
+    "include": [
+        "src/**/*"
+    ]
+}

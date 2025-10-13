@@ -6,20 +6,22 @@ export default defineConfig({
   server: {
     port: 2001,
   },
+
   plugins: [
     pluginReact(),
     pluginModuleFederation({
-      name: 'remote1',
+      name: 'users',
       filename: 'remoteEntry.js',
       exposes: {
         './UsersApp': './src/App',
       },
       shared: {
-        react: { singleton: true, eager: true },
-        'react-dom': { singleton: true, eager: true },
+        react: { singleton: true, eager: true, requiredVersion: '^19.2.0' },
+        'react-dom': { singleton: true, eager: true, requiredVersion: '^19.2.0' },
       },
       manifest: true, // genera mf-manifest.json automáticamente
     }),
   ],
+
 });
 
