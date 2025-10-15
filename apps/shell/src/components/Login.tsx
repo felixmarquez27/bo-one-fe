@@ -18,7 +18,7 @@ export const Login: React.FC<LoginProps> = ({ onLoginSuccess }) => {
     try {
       // Simulación de autenticación
       await new Promise((resolve) => setTimeout(resolve, 1000));
-      
+
       if (email && password) {
         console.log('Inicio de sesión exitoso:', { email });
         onLoginSuccess?.();
@@ -61,8 +61,8 @@ export const Login: React.FC<LoginProps> = ({ onLoginSuccess }) => {
             <div className="space-y-5">
               {/* Email Input */}
               <div>
-                <label 
-                  htmlFor="email" 
+                <label
+                  htmlFor="email"
                   className="block text-sm font-medium text-gray-700 mb-1.5"
                 >
                   Usuario / Correo Corporativo 2
@@ -81,8 +81,8 @@ export const Login: React.FC<LoginProps> = ({ onLoginSuccess }) => {
 
               {/* Password Input */}
               <div>
-                <label 
-                  htmlFor="password" 
+                <label
+                  htmlFor="password"
                   className="block text-sm font-medium text-gray-700 mb-1.5"
                 >
                   Contraseña
@@ -117,8 +117,8 @@ export const Login: React.FC<LoginProps> = ({ onLoginSuccess }) => {
                     Mantener sesión activa
                   </span>
                 </label>
-                <a 
-                  href="#" 
+                <a
+                  href="#"
                   className="text-slate-700 hover:text-slate-900 font-medium"
                 >
                   Recuperar acceso
@@ -133,23 +133,23 @@ export const Login: React.FC<LoginProps> = ({ onLoginSuccess }) => {
               >
                 {isLoading ? (
                   <span className="flex items-center justify-center">
-                    <svg 
-                      className="animate-spin -ml-1 mr-3 h-4 w-4 text-white" 
-                      xmlns="http://www.w3.org/2000/svg" 
-                      fill="none" 
+                    <svg
+                      className="animate-spin -ml-1 mr-3 h-4 w-4 text-white"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
                       viewBox="0 0 24 24"
                     >
-                      <circle 
-                        className="opacity-25" 
-                        cx="12" 
-                        cy="12" 
-                        r="10" 
-                        stroke="currentColor" 
+                      <circle
+                        className="opacity-25"
+                        cx="12"
+                        cy="12"
+                        r="10"
+                        stroke="currentColor"
                         strokeWidth="4"
                       />
-                      <path 
-                        className="opacity-75" 
-                        fill="currentColor" 
+                      <path
+                        className="opacity-75"
+                        fill="currentColor"
                         d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
                       />
                     </svg>
@@ -158,6 +158,28 @@ export const Login: React.FC<LoginProps> = ({ onLoginSuccess }) => {
                 ) : (
                   'Iniciar Sesión'
                 )}
+              </button>
+
+              {/* Separador */}
+              <div className="relative my-6">
+                <div className="absolute inset-0 flex items-center">
+                  <div className="w-full border-t border-gray-300"></div>
+                </div>
+                <div className="relative flex justify-center text-sm">
+                  <span className="px-2 bg-white text-gray-500">O continúa con</span>
+                </div>
+              </div>
+
+              {/* Microsoft Login Button */}
+              <button
+                type="button"
+                onClick={() => window.location.href = 'http://localhost:8000/api/auth/azure'}
+                className="w-full flex items-center justify-center gap-3 bg-white border border-gray-300 text-slate-700 py-2.5 px-4 rounded text-sm font-medium hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-slate-500 focus:ring-offset-2 transition-colors"
+              >
+                <svg width="20" height="20" viewBox="0 0 24 24">
+                  <path fill="currentColor" d="M11.4 24H0V12.6h11.4V24zM24 24H12.6V12.6H24V24zM11.4 11.4H0V0h11.4v11.4zM24 11.4H12.6V0H24v11.4z" />
+                </svg>
+                Iniciar sesión con Microsoft
               </button>
             </div>
           </form>
