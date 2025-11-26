@@ -6,7 +6,7 @@ export default defineConfig({
   server: {
     port: 2001,
   },
-  
+
   source: {
     define: {
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),
@@ -24,6 +24,10 @@ export default defineConfig({
       shared: {
         react: { singleton: true, eager: true, requiredVersion: '^19.2.0' },
         'react-dom': { singleton: true, eager: true, requiredVersion: '^19.2.0' },
+        '@mui/material': { singleton: true, requiredVersion: false },
+        '@emotion/react': { singleton: true, requiredVersion: false },
+        '@emotion/styled': { singleton: true, requiredVersion: false },
+        '@bo-one/design-system': { singleton: true, requiredVersion: false },
       },
       manifest: true,
     }),
