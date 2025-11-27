@@ -1,6 +1,6 @@
 import React, { Suspense, useState } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import '../../../styles/globals.css';
+import { Box, AppBar, Toolbar, Typography, CircularProgress } from '@bo-one/design-system';
 import { Login } from './components/Login';
 import { Sidebar } from './components/Sidebar';
 import { Dashboard } from './pages/Dashboard';
@@ -43,35 +43,43 @@ interface MainLayoutProps {
 
 const MainLayout: React.FC<MainLayoutProps> = ({ onLogout, children }) => {
   return (
-    <div className="flex min-h-screen bg-slate-50">
+    <Box sx={{ display: 'flex', minHeight: '100vh', bgcolor: 'background.default' }}>
       {/* Sidebar */}
       <Sidebar onLogout={onLogout} />
 
       {/* Main Content */}
-      <main className="flex-1 md:ml-64 transition-all duration-300">
+      <Box component="main" sx={{ flexGrow: 1, ml: { md: '256px' }, transition: 'all 0.3s' }}>
         {/* Header */}
-        <header className="bg-white border-b border-gray-200 sticky top-0 z-20">
-          <div className="px-6 py-4">
-            <h1 className="text-xl font-semibold text-slate-900">Sistema de Gestión</h1>
-            <p className="text-sm text-slate-600">Panel de Administración</p>
-          </div>
-        </header>
+        <AppBar position="sticky" color="default" elevation={0} sx={{ borderBottom: 1, borderColor: 'divider', bgcolor: 'background.paper' }}>
+          <Toolbar>
+            <Box>
+              <Typography variant="h6" component="h1" color="text.primary" fontWeight="600">
+                Sistema de Gestión
+              </Typography>
+              <Typography variant="body2" color="text.secondary">
+                Panel de Administración
+              </Typography>
+            </Box>
+          </Toolbar>
+        </AppBar>
 
         {/* Content Area */}
-        <div className="p-6">
+        <Box sx={{ p: 3 }}>
           <Suspense fallback={
-            <div className="flex items-center justify-center h-96">
-              <div className="text-center">
-                <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-slate-600 mb-4"></div>
-                <p className="text-slate-600 text-sm font-medium">Cargando módulo...</p>
-              </div>
-            </div>
+            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: 400 }}>
+              <Box sx={{ textAlign: 'center' }}>
+                <CircularProgress size={48} sx={{ mb: 2, color: 'primary.main' }} />
+                <Typography variant="body2" color="text.secondary" fontWeight="500">
+                  Cargando módulo...
+                </Typography>
+              </Box>
+            </Box>
           }>
             {children}
           </Suspense>
-        </div>
-      </main>
-    </div>
+        </Box>
+      </Box>
+    </Box>
   );
 };
 
@@ -114,7 +122,7 @@ const App: React.FC = () => {
           element={
             <ProtectedRoute isAuthenticated={isAuthenticated}>
               <MainLayout onLogout={handleLogout}>
-                <ErrorBoundary 
+                <ErrorBoundary
                   fallback={<RemoteNotAvailable moduleName="Users" />}
                 >
                   <UsersApp />

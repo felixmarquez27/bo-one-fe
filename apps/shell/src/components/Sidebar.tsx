@@ -1,124 +1,174 @@
 import React, { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link as RouterLink, useLocation } from 'react-router-dom';
+import {
+    Drawer,
+    List,
+    ListItem,
+    ListItemText,
+    Box,
+    Typography,
+    Divider,
+    IconButton,
+    Avatar,
+    Stack
+} from '@bo-one/design-system';
 
 interface MenuItem {
-  id: string;
-  name: string;
-  path: string;
+    id: string;
+    name: string;
+    path: string;
 }
 
 interface SidebarProps {
-  onLogout: () => void;
+    onLogout: () => void;
 }
 
+const drawerWidth = 256;
+
 export const Sidebar: React.FC<SidebarProps> = ({ onLogout }) => {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
-  const location = useLocation();
+    const [mobileOpen, setMobileOpen] = useState(false);
+    const location = useLocation();
 
-  const menuItems: MenuItem[] = [
-    { id: 'dashboard', name: 'Dashboard', path: '/dashboard' },
-    { id: 'usuarios', name: 'Usuarios', path: '/usuarios' },
-    { id: 'configuracion', name: 'Configuración', path: '/configuracion' },
-  ];
+    const menuItems: MenuItem[] = [
+        { id: 'dashboard', name: 'Dashboard', path: '/dashboard' },
+        { id: 'usuarios', name: 'Usuarios', path: '/usuarios' },
+        { id: 'configuracion', name: 'Configuración', path: '/configuracion' },
+    ];
 
-  const isActive = (path: string) => location.pathname === path;
+    const handleDrawerToggle = () => {
+        setMobileOpen(!mobileOpen);
+    };
 
-  return (
-    <>
-      {/* Toggle button para mobile */}
-      <button
-        onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-        className="fixed top-4 left-4 z-50 md:hidden bg-slate-800 text-white p-2 rounded shadow"
-      >
-        <svg
-          className="w-6 h-6"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d={isSidebarOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"}
-          />
-        </svg>
-      </button>
+    const isActive = (path: string) => location.pathname === path;
 
-      {/* Overlay para mobile */}
-      {isSidebarOpen && (
-        <div
-          className="fixed inset-0 bg-black bg-opacity-50 z-30 md:hidden"
-          onClick={() => setIsSidebarOpen(false)}
-        />
-      )}
+    const drawerContent = (
+        <Box sx={{ display: 'flex', flexDirection: 'column', height: '100%', bgcolor: 'background.paper' }}>
+            {/* Logo */}
+            <Box sx={{ p: 3, display: 'flex', alignItems: 'center', gap: 2, borderBottom: 1, borderColor: 'divider' }}>
+                <Box sx={{
+                    width: 32,
+                    height: 32,
+                    bgcolor: 'primary.main',
+                    borderRadius: 1,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center'
+                }}>
+                    <Box sx={{ width: 16, height: 16, border: 2, borderColor: 'white', borderRadius: 0.5 }} />
+                </Box>
+                <Box>
+                    <Typography variant="subtitle1" fontWeight="bold" color="text.primary" lineHeight={1.2}>
+                        BO-ONE
+                    </Typography>
+                    <Typography variant="caption" color="text.secondary">
+                        Enterprise System
+                    </Typography>
+                </Box>
+            </Box>
 
-      {/* Sidebar */}
-      <aside
-        className={`fixed left-0 top-0 h-full bg-slate-900 text-gray-100 w-64 transform transition-transform duration-300 ease-in-out z-40 border-r border-slate-700 ${
-          isSidebarOpen ? 'translate-x-0' : '-translate-x-full'
-        } md:translate-x-0`}
-      >
-        {/* Logo/Header */}
-        <div className="px-6 py-5 border-b border-slate-700 bg-slate-950">
-          <div className="flex items-center space-x-3">
-            <div className="w-8 h-8 bg-slate-700 rounded flex items-center justify-center">
-              <div className="w-4 h-4 border-2 border-gray-300 rounded-sm"></div>
-            </div>
-            <div>
-              <h2 className="text-lg font-semibold text-white">BO-ONE</h2>
-              <p className="text-xs text-gray-400">Enterprise System</p>
-            </div>
-          </div>
-        </div>
+            {/* User Info */}
+            <Box sx={{ p: 2, bgcolor: 'action.hover' }}>
+                <Stack direction="row" spacing={2} alignItems="center">
+                    <Avatar sx={{ bgcolor: 'primary.light' }}>A</Avatar>
+                    <Box sx={{ minWidth: 0 }}>
+                        <Typography variant="subtitle2" noWrap>Administrator</Typography>
+                        <Typography variant="caption" color="text.secondary" display="block" noWrap>
+                            admin@bo-one.com
+                        </Typography>
+                    </Box>
+                </Stack>
+            </Box>
 
-        {/* User Info */}
-        <div className="px-6 py-4 border-b border-slate-700 bg-slate-850">
-          <div className="flex items-center space-x-3">
-            <div className="w-9 h-9 bg-slate-700 rounded flex items-center justify-center">
-              <svg className="w-5 h-5 text-gray-300" fill="currentColor" viewBox="0 0 20 20">
-                <path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd" />
-              </svg>
-            </div>
-            <div className="flex-1 min-w-0">
-              <p className="text-sm font-medium text-white truncate">Administrator</p>
-              <p className="text-xs text-gray-400 truncate">admin@bo-one.com</p>
-            </div>
-          </div>
-        </div>
+            <Divider />
 
-        {/* Menu Items */}
-        <nav className="flex-1 overflow-y-auto py-4">
-          <ul className="space-y-1 px-3">
-            {menuItems.map((item) => (
-              <li key={item.id}>
-                <Link
-                  to={item.path}
-                  onClick={() => setIsSidebarOpen(false)}
-                  className={`block w-full text-left px-4 py-2.5 text-sm font-medium transition-colors duration-150 ${
-                    isActive(item.path)
-                      ? 'bg-slate-700 text-white border-l-4 border-blue-500'
-                      : 'text-gray-300 hover:bg-slate-800 hover:text-white border-l-4 border-transparent'
-                  }`}
+            {/* Menu */}
+            <List sx={{ flexGrow: 1, px: 2, py: 2 }}>
+                {menuItems.map((item) => (
+                    <ListItem
+                        key={item.id}
+                        component={RouterLink}
+                        to={item.path}
+                        onClick={() => setMobileOpen(false)}
+                        sx={{
+                            mb: 0.5,
+                            borderRadius: 1,
+                            bgcolor: isActive(item.path) ? 'primary.main' : 'transparent',
+                            color: isActive(item.path) ? 'white' : 'text.primary',
+                            '&:hover': {
+                                bgcolor: isActive(item.path) ? 'primary.dark' : 'action.hover',
+                            }
+                        }}
+                    >
+                        <ListItemText
+                            primary={item.name}
+                            primaryTypographyProps={{
+                                fontWeight: isActive(item.path) ? 600 : 400,
+                                fontSize: '0.875rem'
+                            }}
+                        />
+                    </ListItem>
+                ))}
+            </List>
+
+            <Divider />
+
+            {/* Logout */}
+            <Box sx={{ p: 2 }}>
+                <ListItem
+                    component="button"
+                    onClick={onLogout}
+                    sx={{
+                        borderRadius: 1,
+                        color: 'error.main',
+                        '&:hover': { bgcolor: 'error.lighter' }
+                    }}
                 >
-                  {item.name}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </nav>
+                    <ListItemText primary="Cerrar Sesión" primaryTypographyProps={{ fontWeight: 500 }} />
+                </ListItem>
+            </Box>
+        </Box>
+    );
 
-        {/* Footer with Logout */}
-        <div className="p-4 border-t border-slate-700">
-          <button
-            onClick={onLogout}
-            className="w-full px-4 py-2.5 text-sm font-medium text-left text-gray-300 hover:bg-slate-800 hover:text-white transition-colors duration-150 border-l-4 border-transparent hover:border-red-500"
-          >
-            Cerrar Sesión
-          </button>
-        </div>
-      </aside>
-    </>
-  );
+    return (
+        <>
+            {/* Mobile Toggle */}
+            <IconButton
+                color="inherit"
+                aria-label="open drawer"
+                edge="start"
+                onClick={handleDrawerToggle}
+                sx={{ mr: 2, display: { md: 'none' }, position: 'fixed', top: 8, left: 8, zIndex: 1100, bgcolor: 'background.paper', boxShadow: 1 }}
+            >
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <path d="M3 12h18M3 6h18M3 18h18" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+            </IconButton>
+
+            {/* Mobile Drawer */}
+            <Drawer
+                variant="temporary"
+                open={mobileOpen}
+                onClose={handleDrawerToggle}
+                ModalProps={{ keepMounted: true }}
+                sx={{
+                    display: { xs: 'block', md: 'none' },
+                    '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
+                }}
+            >
+                {drawerContent}
+            </Drawer>
+
+            {/* Desktop Drawer */}
+            <Drawer
+                variant="permanent"
+                sx={{
+                    display: { xs: 'none', md: 'block' },
+                    '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth, borderRight: '1px solid', borderColor: 'divider' },
+                }}
+                open
+            >
+                {drawerContent}
+            </Drawer>
+        </>
+    );
 };
-
