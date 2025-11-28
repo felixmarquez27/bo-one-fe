@@ -4,6 +4,7 @@ import {
     Drawer,
     List,
     ListItem,
+    ListItemButton,
     ListItemText,
     Box,
     Typography,
@@ -30,9 +31,8 @@ export const Sidebar: React.FC<SidebarProps> = ({ onLogout }) => {
     const location = useLocation();
 
     const menuItems: MenuItem[] = [
-        { id: 'dashboard', name: 'Dashboard', path: '/dashboard' },
+        { id: 'dashboard', name: 'Dashboard', path: '/' },
         { id: 'usuarios', name: 'Usuarios', path: '/usuarios' },
-        { id: 'configuracion', name: 'Configuración', path: '/configuracion' },
     ];
 
     const handleDrawerToggle = () => {
@@ -84,28 +84,28 @@ export const Sidebar: React.FC<SidebarProps> = ({ onLogout }) => {
             {/* Menu */}
             <List sx={{ flexGrow: 1, px: 2, py: 2 }}>
                 {menuItems.map((item) => (
-                    <ListItem
-                        key={item.id}
-                        component={RouterLink}
-                        to={item.path}
-                        onClick={() => setMobileOpen(false)}
-                        sx={{
-                            mb: 0.5,
-                            borderRadius: 1,
-                            bgcolor: isActive(item.path) ? 'primary.main' : 'transparent',
-                            color: isActive(item.path) ? 'white' : 'text.primary',
-                            '&:hover': {
-                                bgcolor: isActive(item.path) ? 'primary.dark' : 'action.hover',
-                            }
-                        }}
-                    >
-                        <ListItemText
-                            primary={item.name}
-                            primaryTypographyProps={{
-                                fontWeight: isActive(item.path) ? 600 : 400,
-                                fontSize: '0.875rem'
+                    <ListItem key={item.id} disablePadding sx={{ mb: 0.5, display: 'block' }}>
+                        <ListItemButton
+                            component={RouterLink}
+                            to={item.path}
+                            onClick={() => setMobileOpen(false)}
+                            sx={{
+                                borderRadius: 1,
+                                bgcolor: isActive(item.path) ? 'primary.main' : 'transparent',
+                                color: isActive(item.path) ? 'white' : 'text.primary',
+                                '&:hover': {
+                                    bgcolor: isActive(item.path) ? 'primary.dark' : 'action.hover',
+                                }
                             }}
-                        />
+                        >
+                            <ListItemText
+                                primary={item.name}
+                                primaryTypographyProps={{
+                                    fontWeight: isActive(item.path) ? 600 : 400,
+                                    fontSize: '0.875rem'
+                                }}
+                            />
+                        </ListItemButton>
                     </ListItem>
                 ))}
             </List>
@@ -114,16 +114,17 @@ export const Sidebar: React.FC<SidebarProps> = ({ onLogout }) => {
 
             {/* Logout */}
             <Box sx={{ p: 2 }}>
-                <ListItem
-                    component="button"
-                    onClick={onLogout}
-                    sx={{
-                        borderRadius: 1,
-                        color: 'error.main',
-                        '&:hover': { bgcolor: 'error.lighter' }
-                    }}
-                >
-                    <ListItemText primary="Cerrar Sesión" primaryTypographyProps={{ fontWeight: 500 }} />
+                <ListItem disablePadding sx={{ display: 'block' }}>
+                    <ListItemButton
+                        onClick={onLogout}
+                        sx={{
+                            borderRadius: 1,
+                            color: 'error.main',
+                            '&:hover': { bgcolor: 'error.lighter' }
+                        }}
+                    >
+                        <ListItemText primary="Cerrar Sesión" primaryTypographyProps={{ fontWeight: 500 }} />
+                    </ListItemButton>
                 </ListItem>
             </Box>
         </Box>

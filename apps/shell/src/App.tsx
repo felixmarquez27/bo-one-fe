@@ -4,9 +4,7 @@ import { Box, AppBar, Toolbar, Typography, CircularProgress } from '@bo-one/desi
 import { Login } from './components/Login';
 import { Sidebar } from './components/Sidebar';
 import { Dashboard } from './pages/Dashboard';
-import { Configuracion } from './pages/Configuracion';
 import { NotFound } from './pages/NotFound';
-import { TestPage } from './pages/TestPage';
 import { ErrorBoundary } from './components/ErrorBoundary';
 import { RemoteNotAvailable } from './components/RemoteNotAvailable';
 
@@ -97,7 +95,7 @@ const App: React.FC = () => {
           path="/login"
           element={
             isAuthenticated ? (
-              <Navigate to="/dashboard" replace />
+              <Navigate to="/" replace />
             ) : (
               <Login onLoginSuccess={() => setIsAuthenticated(true)} />
             )
@@ -106,7 +104,7 @@ const App: React.FC = () => {
 
         {/* Rutas protegidas */}
         <Route
-          path="/dashboard"
+          path="/"
           element={
             <ProtectedRoute isAuthenticated={isAuthenticated}>
               <MainLayout onLogout={handleLogout}>
@@ -129,23 +127,6 @@ const App: React.FC = () => {
               </MainLayout>
             </ProtectedRoute>
           }
-        />
-
-        <Route
-          path="/configuracion"
-          element={
-            <ProtectedRoute isAuthenticated={isAuthenticated}>
-              <MainLayout onLogout={handleLogout}>
-                <Configuracion />
-              </MainLayout>
-            </ProtectedRoute>
-          }
-        />
-
-        {/* Ruta por defecto */}
-        <Route
-          path="/"
-          element={<TestPage />}
         />
 
         {/* Ruta 404 */}

@@ -13,19 +13,21 @@ COPY types ./types
 # Copiar configuración de shell
 COPY apps/shell/package*.json ./apps/shell/
 COPY apps/shell/rsbuild.config.ts ./apps/shell/
+COPY apps/users/package.json ./apps/users/
 
 # Copiar configuración del design system para que el workspace funcione
 COPY packages/design-system/package.json ./packages/design-system/
 COPY packages/design-system/src ./packages/design-system/src
 COPY packages/design-system/tsconfig.json ./packages/design-system/
-COPY packages/design-system/dist ./packages/design-system/dist
-
 
 # Instalar dependencias desde la raíz (workspace)
 RUN npm ci --legacy-peer-deps
 
 # Exponer puerto
 EXPOSE 2000
+
+# Mantener workdir en la raíz para usar workspace
+WORKDIR /app
 
 # El código fuente se monta como volumen
 CMD ["npm", "run", "dev", "--workspace=apps/shell"]

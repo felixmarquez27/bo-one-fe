@@ -39,4 +39,3 @@ services:
 networks:
   bo-one-network:
     driver: bridge
-

@@ -15,6 +15,12 @@ COPY types ./types
 COPY apps/users/package*.json ./apps/users/
 COPY apps/users/rsbuild.config.ts ./apps/users/
 
+# Copiar otros workspaces necesarios para npm ci
+COPY apps/shell/package.json ./apps/shell/
+COPY packages/design-system/package.json ./packages/design-system/
+COPY packages/design-system/src ./packages/design-system/src
+COPY packages/design-system/tsconfig.json ./packages/design-system/
+
 # Instalar dependencias desde la raíz (workspace)
 RUN npm ci --legacy-peer-deps
 

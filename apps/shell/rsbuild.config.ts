@@ -1,10 +1,17 @@
 import { pluginModuleFederation } from '@module-federation/rsbuild-plugin';
 import { defineConfig } from '@rsbuild/core';
 import { pluginReact } from '@rsbuild/plugin-react';
+import path from 'path';
 
 export default defineConfig({
   server: {
     port: 2000,
+  },
+
+  source: {
+    alias: {
+      '@bo-one/design-system': path.resolve(__dirname, '../../packages/design-system/src'),
+    },
   },
   plugins: [
     pluginReact(),
@@ -17,9 +24,6 @@ export default defineConfig({
       shared: {
         react: { singleton: true, eager: true },
         'react-dom': { singleton: true, eager: true },
-        '@mui/material': { singleton: true, eager: true },
-        '@emotion/react': { singleton: true, eager: true },
-        '@emotion/styled': { singleton: true, eager: true },
         '@bo-one/design-system': { singleton: true, eager: true },
       },
       manifest: false,

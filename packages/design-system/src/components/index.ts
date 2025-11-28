@@ -90,6 +90,10 @@ export type { ListProps } from './List/List';
 export { ListItem } from './ListItem/ListItem';
 export type { ListItemProps } from './ListItem/ListItem';
 
+// ListItemButton
+export { ListItemButton } from './ListItemButton/ListItemButton';
+export type { ListItemButtonProps } from './ListItemButton/ListItemButton';
+
 // ListItemText
 export { ListItemText } from './ListItemText/ListItemText';
 export type { ListItemTextProps } from './ListItemText/ListItemText';
