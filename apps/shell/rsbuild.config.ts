@@ -13,14 +13,16 @@ export default defineConfig({
       remotes: {
         users: 'users@http://localhost:2001/mf-manifest.json',
       },
+
       shared: {
-        react: { singleton: true, eager: true, requiredVersion: '^19.2.0' },
-        'react-dom': { singleton: true, eager: true, requiredVersion: '^19.2.0' },
-        '@mui/material': { singleton: true, requiredVersion: false },
-        '@emotion/react': { singleton: true, requiredVersion: false },
-        '@emotion/styled': { singleton: true, requiredVersion: false },
-        '@bo-one/design-system': { singleton: true, requiredVersion: false },
+        react: { singleton: true, eager: true },
+        'react-dom': { singleton: true, eager: true },
+        '@mui/material': { singleton: true, eager: true },
+        '@emotion/react': { singleton: true, eager: true },
+        '@emotion/styled': { singleton: true, eager: true },
+        '@bo-one/design-system': { singleton: true, eager: true },
       },
+      manifest: false,
     }),
 
   ],

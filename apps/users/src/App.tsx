@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import '../../../styles/globals.css';
 
 interface User {
   id: number;
@@ -114,24 +113,22 @@ const App = () => {
                     <td className="px-5 py-3.5 text-sm text-slate-600">{user.email}</td>
                     <td className="px-5 py-3.5">
                       <span
-                        className={`px-2.5 py-1 rounded text-xs font-medium ${
-                          user.rol === 'Administrador'
+                        className={`px-2.5 py-1 rounded text-xs font-medium ${user.rol === 'Administrador'
                             ? 'bg-slate-100 text-slate-700 border border-slate-300'
                             : user.rol === 'Editor'
-                            ? 'bg-blue-50 text-blue-700 border border-blue-200'
-                            : 'bg-gray-100 text-gray-700 border border-gray-300'
-                        }`}
+                              ? 'bg-blue-50 text-blue-700 border border-blue-200'
+                              : 'bg-gray-100 text-gray-700 border border-gray-300'
+                          }`}
                       >
                         {user.rol}
                       </span>
                     </td>
                     <td className="px-5 py-3.5">
                       <span
-                        className={`px-2.5 py-1 rounded text-xs font-medium ${
-                          user.estado === 'Activo'
+                        className={`px-2.5 py-1 rounded text-xs font-medium ${user.estado === 'Activo'
                             ? 'bg-green-50 text-green-700 border border-green-200'
                             : 'bg-red-50 text-red-700 border border-red-200'
-                        }`}
+                          }`}
                       >
                         {user.estado}
                       </span>

@@ -4,10 +4,9 @@ import { Box, AppBar, Toolbar, Typography, CircularProgress } from '@bo-one/desi
 import { Login } from './components/Login';
 import { Sidebar } from './components/Sidebar';
 import { Dashboard } from './pages/Dashboard';
-import { Productos } from './pages/Productos';
-import { Reportes } from './pages/Reportes';
 import { Configuracion } from './pages/Configuracion';
 import { NotFound } from './pages/NotFound';
+import { TestPage } from './pages/TestPage';
 import { ErrorBoundary } from './components/ErrorBoundary';
 import { RemoteNotAvailable } from './components/RemoteNotAvailable';
 
@@ -146,13 +145,7 @@ const App: React.FC = () => {
         {/* Ruta por defecto */}
         <Route
           path="/"
-          element={
-            isAuthenticated ? (
-              <Navigate to="/dashboard" replace />
-            ) : (
-              <Navigate to="/login" replace />
-            )
-          }
+          element={<TestPage />}
         />
 
         {/* Ruta 404 */}
