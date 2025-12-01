@@ -7,17 +7,29 @@ import { typography, components, spacing, breakpoints, shape } from './shared';
  */
 const lightColors = {
     primary: {
-        main: '#0f172a', // Slate 900
-        light: '#334155', // Slate 700
-        dark: '#020617', // Slate 950
-        contrastText: '#ffffff',
+        main: '#DA291C',       // Rojo corporativo
+        light: '#FF5245',
+        dark: '#A30000',
+        contrastText: '#FFFFFF',
     },
+
     secondary: {
-        main: '#3b82f6', // Blue 500
-        light: '#60a5fa', // Blue 400
-        dark: '#2563eb', // Blue 600
-        contrastText: '#ffffff',
+        main: '#000000',
+        contrastText: '#FFFFFF',
     },
+
+    background: {
+        default: '#FFFFFF',    // Fondo general claro
+        paper: '#F5F5F5',      // Superficies
+    },
+
+    text: {
+        primary: '#000000',
+        secondary: '#424242',
+        disabled: 'rgba(0,0,0,0.4)',
+    },
+
+    divider: 'rgba(0,0,0,0.12)',
     success: {
         main: '#10b981', // Green 500
         light: '#34d399', // Green 400
@@ -41,29 +53,13 @@ const lightColors = {
         light: '#60a5fa', // Blue 400
         dark: '#2563eb', // Blue 600
         contrastText: '#ffffff',
-    },
-    background: {
-        default: '#f8fafc', // Slate 50
-        paper: '#ffffff',
-    },
-    text: {
-        primary: '#0f172a', // Slate 900
-        secondary: '#475569', // Slate 600
-        disabled: '#94a3b8', // Slate 400
-    },
-    divider: '#e2e8f0', // Slate 200
+    }
 };
 
 /**
  * Opciones del tema claro de BO ONE
  */
 const lightThemeOptions: BOOneThemeOptions = {
-    palette: lightColors,
-    typography,
-    components,
-    spacing,
-    breakpoints,
-    shape,
 };
 
 /**

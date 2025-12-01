@@ -10,9 +10,13 @@ import {
     FormControlLabel,
     Link,
     Stack,
-    Divider,
+    Grid,
+    InputAdornment,
+    IconButton,
+    Alert,
     CircularProgress,
-    Alert
+    Visibility,
+    VisibilityOff,
 } from '@bo-one/design-system';
 
 interface LoginProps {
@@ -22,8 +26,14 @@ interface LoginProps {
 export const Login: React.FC<LoginProps> = ({ onLoginSuccess }) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [showPassword, setShowPassword] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
+
+    const handleClickShowPassword = () => setShowPassword((show) => !show);
+    const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
+        event.preventDefault();
+    };
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -53,139 +63,122 @@ export const Login: React.FC<LoginProps> = ({ onLoginSuccess }) => {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            bgcolor: 'background.default',
-            px: 2,
-            py: 4
+            bgcolor: '#eef2f6', // Light grey background similar to reference
+            p: 2
         }}>
-            <Box sx={{ width: '100%', maxWidth: 450 }}>
-                {/* Logo o Título Principal */}
-                <Box sx={{ textAlign: 'center', mb: 4 }}>
-                    <Box sx={{
-                        display: 'inline-flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        width: 64,
-                        height: 64,
-                        bgcolor: 'primary.main',
-                        borderRadius: 1,
-                        mb: 2
-                    }}>
-                        <Box sx={{ width: 32, height: 32, border: 4, borderColor: 'white', borderRadius: 0.5 }} />
-                    </Box>
-                    <Typography variant="h4" component="h1" fontWeight="bold" color="text.primary" gutterBottom>
-                        BO-ONE
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary">
-                        Enterprise Management System
-                    </Typography>
-                </Box>
-
-                {/* Card de Login */}
-                <Card elevation={2}>
-                    {/* Header */}
-                    <Box sx={{ bgcolor: 'primary.main', px: 4, py: 3, borderBottom: 1, borderColor: 'divider' }}>
-                        <Typography variant="h6" align="center" sx={{ color: 'white', fontWeight: 600 }}>
-                            Inicio de Sesión
-                        </Typography>
-                        <Typography variant="body2" align="center" sx={{ color: 'rgba(255,255,255,0.8)', mt: 0.5 }}>
-                            Ingrese sus credenciales corporativas
-                        </Typography>
-                    </Box>
-
-                    <CardContent sx={{ p: 4 }}>
-                        <form onSubmit={handleSubmit}>
-                            <Stack spacing={3}>
-                                <TextField
-                                    id="email"
-                                    label="Usuario / Correo Corporativo"
-                                    type="email"
-                                    placeholder="usuario@empresa.com"
-                                    value={email}
-                                    onChange={(e) => setEmail(e.target.value)}
-                                    required
-                                    disabled={isLoading}
-                                    fullWidth
-                                    variant="outlined"
+            <Card sx={{
+                maxWidth: 475,
+                width: '100%',
+                borderRadius: 3,
+                boxShadow: '0px 2px 1px -1px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14), 0px 1px 3px 0px rgba(0,0,0,0.12)',
+                overflow: 'visible' // Allow content to flow if needed
+            }}>
+                <CardContent sx={{ p: { xs: 3, sm: 5 } }}>
+                    <Grid container spacing={3} direction="column" alignItems="center">
+                        {/* Logo */}
+                        <Grid>
+                            <Box sx={{ mb: 2, display: 'flex', justifyContent: 'center' }}>
+                                <img
+                                    src="/assets/claro-tv.png"
+                                    alt="Logo"
+                                    style={{ height: 70 }}
                                 />
+                            </Box>
+                        </Grid>
 
-                                <TextField
-                                    id="password"
-                                    label="Contraseña"
-                                    type="password"
-                                    placeholder="••••••••"
-                                    value={password}
-                                    onChange={(e) => setPassword(e.target.value)}
-                                    required
-                                    disabled={isLoading}
-                                    fullWidth
-                                    variant="outlined"
-                                />
+                        {/* Welcome Text */}
+                        <Grid size={12} sx={{ width: '100%', textAlign: 'center' }}>
 
-                                {error && (
-                                    <Alert severity="error" sx={{ width: '100%' }}>
-                                        {error}
-                                    </Alert>
-                                )}
+                            <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
+                                Ingrese sus credenciales para continuar
+                            </Typography>
+                        </Grid>
 
-                                <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                                    <FormControlLabel
-                                        control={<Checkbox defaultChecked />}
-                                        label={<Typography variant="body2" color="text.secondary">Mantener sesión activa</Typography>}
+                        {/* Form */}
+                        <Grid size={12} sx={{ width: '100%' }}>
+                            <form onSubmit={handleSubmit}>
+                                <Stack spacing={3}>
+                                    <TextField
+                                        id="email"
+                                        label="Email Address / Username"
+                                        type="email"
+                                        value={email}
+                                        onChange={(e) => setEmail(e.target.value)}
+                                        required
+                                        disabled={isLoading}
+                                        fullWidth
+                                        variant="outlined"
+                                        sx={{ bgcolor: '#fafafa' }}
                                     />
-                                    <Link href="#" variant="body2" underline="hover" color="primary">
-                                        Recuperar acceso
-                                    </Link>
-                                </Box>
 
-                                <Button
-                                    type="submit"
-                                    variant="contained"
-                                    color="primary"
-                                    size="large"
-                                    fullWidth
-                                    disabled={isLoading}
-                                    startIcon={isLoading ? <CircularProgress size={20} color="inherit" /> : null}
-                                >
-                                    {isLoading ? 'Verificando...' : 'Iniciar Sesión'}
-                                </Button>
+                                    <TextField
+                                        id="password"
+                                        label="Password"
+                                        type={showPassword ? 'text' : 'password'}
+                                        value={password}
+                                        onChange={(e) => setPassword(e.target.value)}
+                                        required
+                                        disabled={isLoading}
+                                        fullWidth
+                                        variant="outlined"
+                                        sx={{ bgcolor: '#fafafa' }}
+                                        InputProps={{
+                                            endAdornment: (
+                                                <InputAdornment position="end">
+                                                    <IconButton
+                                                        aria-label="toggle password visibility"
+                                                        onClick={handleClickShowPassword}
+                                                        onMouseDown={handleMouseDownPassword}
+                                                        edge="end"
+                                                    >
+                                                        {showPassword ? <VisibilityOff /> : <Visibility />}
+                                                    </IconButton>
+                                                </InputAdornment>
+                                            ),
+                                        }}
+                                    />
 
-                                <Divider>
-                                    <Typography variant="caption" color="text.secondary">
-                                        O continúa con
-                                    </Typography>
-                                </Divider>
+                                    {error && (
+                                        <Alert severity="error">
+                                            {error}
+                                        </Alert>
+                                    )}
 
-                                <Button
-                                    variant="outlined"
-                                    color="inherit"
-                                    fullWidth
-                                    onClick={() => window.location.href = 'http://localhost:8000/api/auth/azure'}
-                                    startIcon={
-                                        <svg width="20" height="20" viewBox="0 0 24 24">
-                                            <path fill="currentColor" d="M11.4 24H0V12.6h11.4V24zM24 24H12.6V12.6H24V24zM11.4 11.4H0V0h11.4v11.4zM24 11.4H12.6V0H24v11.4z" />
-                                        </svg>
-                                    }
-                                >
-                                    Iniciar sesión con Microsoft
-                                </Button>
-                            </Stack>
-                        </form>
-                    </CardContent>
+                                    <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                        <Link href="#" variant="subtitle1" underline="hover" color="primary" fontWeight="bold" fontSize="0.75rem">
+                                            ¿Olvidaste tu contraseña?
+                                        </Link>
+                                    </Box>
 
-                    <Box sx={{ px: 4, py: 2, bgcolor: 'action.hover', borderTop: 1, borderColor: 'divider' }}>
-                        <Typography variant="caption" display="block" align="center" color="text.secondary">
-                            Acceso restringido solo para personal autorizado
-                        </Typography>
-                    </Box>
-                </Card>
+                                    <Button
+                                        type="submit"
+                                        variant="contained"
+                                        color="primary"
+                                        size="large"
+                                        fullWidth
+                                        disabled={isLoading}
+                                        sx={{
+                                            py: 1.5,
+                                            fontSize: '1rem',
+                                            textTransform: 'none',
+                                            borderRadius: 2,
+                                            boxShadow: 'none',
+                                            '&:hover': {
+                                                boxShadow: 'none'
+                                            }
+                                        }}
+                                        startIcon={isLoading ? <CircularProgress size={20} color="inherit" /> : null}
+                                    >
+                                        {isLoading ? 'Iniciando Sesión...' : 'Iniciar Sesión'}
+                                    </Button>
 
-                {/* Footer Info */}
-                <Box sx={{ mt: 3, textAlign: 'center' }}>
-                    <Typography variant="caption" color="text.secondary">
-                        © 2025 BO-ONE Enterprise System. Todos los derechos reservados.
-                    </Typography>
-                </Box>
-            </Box>
+
+                                </Stack>
+                            </form>
+                        </Grid>
+                    </Grid>
+                </CardContent>
+            </Card>
         </Box>
     );
 };

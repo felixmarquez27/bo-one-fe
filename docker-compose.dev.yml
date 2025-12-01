@@ -13,6 +13,7 @@ services:
     volumes:
       - ./apps/shell/src:/app/apps/shell/src
       - ./styles:/app/styles
+      - ./packages/design-system:/app/packages/design-system
       - /app/node_modules
     environment:
       - NODE_ENV=development

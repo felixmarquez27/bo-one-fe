@@ -85,3 +85,31 @@ export type {
     DialogContentProps,
     DialogActionsProps,
 } from './components';
+
+// Icon exports
+export {
+    Visibility,
+    VisibilityOff,
+    MenuIcon,
+    CloseIcon,
+    SearchIcon,
+    SettingsIcon,
+    PersonIcon,
+    DashboardIcon,
+    LogoutIcon,
+    ChevronLeft,
+    ChevronRight,
+    ExpandMore,
+    ExpandLess,
+    AddIcon,
+    EditIcon,
+    DeleteIcon,
+    CheckIcon,
+    ClearIcon,
+    InfoIcon,
+    WarningIcon,
+    ErrorIcon,
+    CheckCircleIcon,
+} from './icons';
+
+export type { SvgIconProps } from './icons';
