@@ -1,4 +1,19 @@
 import { useState } from 'react';
+import {
+  Box,
+  Paper,
+  Typography,
+  Chip,
+  IconButton,
+  Avatar,
+  Button,
+  Stack,
+  EditIcon,
+  DeleteIcon,
+  Visibility,
+  ChevronLeft,
+  ChevronRight,
+} from '@bo-one/design-system';
 
 interface User {
   id: number;
@@ -61,7 +76,7 @@ const App = () => {
     },
   ]);
 
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm] = useState('');
 
   const filteredUsers = users.filter(
     (user) =>
@@ -70,134 +85,332 @@ const App = () => {
       user.rol.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  return (
-    <div className="space-y-5">
+  const getRolColor = (rol: string): 'default' | 'primary' | 'secondary' | 'error' | 'info' | 'success' | 'warning' => {
+    switch (rol) {
+      case 'Administrador':
+        return 'secondary';
+      case 'Editor':
+        return 'primary';
+      default:
+        return 'default';
+    }
+  };
 
+  return (
+    <Box sx={{ p: 0 }}>
       {/* Users Table */}
-      <div className="bg-white border border-gray-200 rounded overflow-hidden">
-        <div className="overflow-x-auto">
-          <table className="w-full">
-            <thead className="bg-slate-800 text-white">
-              <tr>
-                <th className="px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider">ID</th>
-                <th className="px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider">Nombre</th>
-                <th className="px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider">Email</th>
-                <th className="px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider">Rol</th>
-                <th className="px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider">Estado</th>
-                <th className="px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider">Fecha Registro</th>
-                <th className="px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider">Acciones</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-gray-200">
+      <Paper
+        elevation={0}
+        sx={{
+          border: '1px solid',
+          borderColor: 'divider',
+          borderRadius: 2,
+          overflow: 'hidden'
+        }}
+      >
+        <Box sx={{ overflowX: 'auto' }}>
+          <Box component="table" sx={{ width: '100%', borderCollapse: 'collapse' }}>
+            {/* Table Head */}
+            <Box
+              component="thead"
+              sx={{
+                bgcolor: 'primary.main',
+                color: 'primary.contrastText'
+              }}
+            >
+              <Box component="tr">
+                <Box
+                  component="th"
+                  sx={{
+                    px: 2.5,
+                    py: 1.5,
+                    textAlign: 'left',
+                    fontWeight: 600,
+                    fontSize: '0.75rem',
+                    textTransform: 'uppercase',
+                    letterSpacing: '0.05em'
+                  }}
+                >
+                  ID
+                </Box>
+                <Box
+                  component="th"
+                  sx={{
+                    px: 2.5,
+                    py: 1.5,
+                    textAlign: 'left',
+                    fontWeight: 600,
+                    fontSize: '0.75rem',
+                    textTransform: 'uppercase',
+                    letterSpacing: '0.05em'
+                  }}
+                >
+                  Nombre
+                </Box>
+                <Box
+                  component="th"
+                  sx={{
+                    px: 2.5,
+                    py: 1.5,
+                    textAlign: 'left',
+                    fontWeight: 600,
+                    fontSize: '0.75rem',
+                    textTransform: 'uppercase',
+                    letterSpacing: '0.05em'
+                  }}
+                >
+                  Email
+                </Box>
+                <Box
+                  component="th"
+                  sx={{
+                    px: 2.5,
+                    py: 1.5,
+                    textAlign: 'left',
+                    fontWeight: 600,
+                    fontSize: '0.75rem',
+                    textTransform: 'uppercase',
+                    letterSpacing: '0.05em'
+                  }}
+                >
+                  Rol
+                </Box>
+                <Box
+                  component="th"
+                  sx={{
+                    px: 2.5,
+                    py: 1.5,
+                    textAlign: 'left',
+                    fontWeight: 600,
+                    fontSize: '0.75rem',
+                    textTransform: 'uppercase',
+                    letterSpacing: '0.05em'
+                  }}
+                >
+                  Estado
+                </Box>
+                <Box
+                  component="th"
+                  sx={{
+                    px: 2.5,
+                    py: 1.5,
+                    textAlign: 'left',
+                    fontWeight: 600,
+                    fontSize: '0.75rem',
+                    textTransform: 'uppercase',
+                    letterSpacing: '0.05em'
+                  }}
+                >
+                  Fecha Registro
+                </Box>
+                <Box
+                  component="th"
+                  sx={{
+                    px: 2.5,
+                    py: 1.5,
+                    textAlign: 'left',
+                    fontWeight: 600,
+                    fontSize: '0.75rem',
+                    textTransform: 'uppercase',
+                    letterSpacing: '0.05em'
+                  }}
+                >
+                  Acciones
+                </Box>
+              </Box>
+            </Box>
+
+            {/* Table Body */}
+            <Box component="tbody" sx={{ '& tr': { borderBottom: '1px solid', borderColor: 'divider' } }}>
               {filteredUsers.length > 0 ? (
                 filteredUsers.map((user) => (
-                  <tr
+                  <Box
+                    component="tr"
                     key={user.id}
-                    className="hover:bg-slate-50 transition-colors"
+                    sx={{
+                      '&:hover': {
+                        bgcolor: 'action.hover',
+                      },
+                      transition: 'background-color 0.2s',
+                    }}
                   >
-                    <td className="px-5 py-3.5 text-sm text-slate-900">
-                      {user.id}
-                    </td>
-                    <td className="px-5 py-3.5">
-                      <div className="flex items-center">
-                        <div className="w-8 h-8 bg-slate-200 rounded flex items-center justify-center mr-3">
-                          <span className="text-slate-700 font-medium text-xs uppercase">
-                            {user.nombre.charAt(0)}
-                          </span>
-                        </div>
-                        <span className="text-sm font-medium text-slate-900">
+                    <Box component="td" sx={{ px: 2.5, py: 2 }}>
+                      <Typography variant="body2" color="text.primary">
+                        {user.id}
+                      </Typography>
+                    </Box>
+                    <Box component="td" sx={{ px: 2.5, py: 2 }}>
+                      <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
+                        <Avatar
+                          sx={{
+                            width: 32,
+                            height: 32,
+                            bgcolor: 'primary.light',
+                            fontSize: '0.875rem',
+                            fontWeight: 600
+                          }}
+                        >
+                          {user.nombre.charAt(0)}
+                        </Avatar>
+                        <Typography variant="body2" fontWeight={500}>
                           {user.nombre}
-                        </span>
-                      </div>
-                    </td>
-                    <td className="px-5 py-3.5 text-sm text-slate-600">{user.email}</td>
-                    <td className="px-5 py-3.5">
-                      <span
-                        className={`px-2.5 py-1 rounded text-xs font-medium ${user.rol === 'Administrador'
-                            ? 'bg-slate-100 text-slate-700 border border-slate-300'
-                            : user.rol === 'Editor'
-                              ? 'bg-blue-50 text-blue-700 border border-blue-200'
-                              : 'bg-gray-100 text-gray-700 border border-gray-300'
-                          }`}
-                      >
-                        {user.rol}
-                      </span>
-                    </td>
-                    <td className="px-5 py-3.5">
-                      <span
-                        className={`px-2.5 py-1 rounded text-xs font-medium ${user.estado === 'Activo'
-                            ? 'bg-green-50 text-green-700 border border-green-200'
-                            : 'bg-red-50 text-red-700 border border-red-200'
-                          }`}
-                      >
-                        {user.estado}
-                      </span>
-                    </td>
-                    <td className="px-5 py-3.5 text-sm text-slate-600">
-                      {new Date(user.fechaRegistro).toLocaleDateString('es-ES', {
-                        year: 'numeric',
-                        month: '2-digit',
-                        day: '2-digit',
-                      })}
-                    </td>
-                    <td className="px-5 py-3.5">
-                      <div className="flex space-x-1">
-                        <button className="p-1.5 text-slate-600 hover:bg-slate-100 rounded transition-colors" title="Editar">
-                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-                          </svg>
-                        </button>
-                        <button className="p-1.5 text-slate-600 hover:bg-slate-100 rounded transition-colors" title="Ver">
-                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                          </svg>
-                        </button>
-                        <button className="p-1.5 text-red-600 hover:bg-red-50 rounded transition-colors" title="Eliminar">
-                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                          </svg>
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
+                        </Typography>
+                      </Box>
+                    </Box>
+                    <Box component="td" sx={{ px: 2.5, py: 2 }}>
+                      <Typography variant="body2" color="text.secondary">
+                        {user.email}
+                      </Typography>
+                    </Box>
+                    <Box component="td" sx={{ px: 2.5, py: 2 }}>
+                      <Chip
+                        label={user.rol}
+                        color={getRolColor(user.rol)}
+                        size="small"
+                        variant="outlined"
+                      />
+                    </Box>
+                    <Box component="td" sx={{ px: 2.5, py: 2 }}>
+                      <Chip
+                        label={user.estado}
+                        color={user.estado === 'Activo' ? 'success' : 'error'}
+                        size="small"
+                        variant="outlined"
+                      />
+                    </Box>
+                    <Box component="td" sx={{ px: 2.5, py: 2 }}>
+                      <Typography variant="body2" color="text.secondary">
+                        {new Date(user.fechaRegistro).toLocaleDateString('es-ES', {
+                          year: 'numeric',
+                          month: '2-digit',
+                          day: '2-digit',
+                        })}
+                      </Typography>
+                    </Box>
+                    <Box component="td" sx={{ px: 2.5, py: 2 }}>
+                      <Stack direction="row" spacing={0.5}>
+                        <IconButton
+                          size="small"
+                          color="primary"
+                          title="Ver"
+                          sx={{
+                            '&:hover': {
+                              bgcolor: 'action.hover'
+                            }
+                          }}
+                        >
+                          <Visibility fontSize="small" />
+                        </IconButton>
+                        <IconButton
+                          size="small"
+                          color="primary"
+                          title="Editar"
+                          sx={{
+                            '&:hover': {
+                              bgcolor: 'action.hover'
+                            }
+                          }}
+                        >
+                          <EditIcon fontSize="small" />
+                        </IconButton>
+                        <IconButton
+                          size="small"
+                          color="error"
+                          title="Eliminar"
+                          sx={{
+                            '&:hover': {
+                              bgcolor: 'error.lighter'
+                            }
+                          }}
+                        >
+                          <DeleteIcon fontSize="small" />
+                        </IconButton>
+                      </Stack>
+                    </Box>
+                  </Box>
                 ))
               ) : (
-                <tr>
-                  <td colSpan={7} className="px-5 py-12 text-center">
-                    <div className="text-slate-400">
-                      <svg className="w-12 h-12 mx-auto mb-3 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
+                <Box component="tr">
+                  <Box component="td" sx={{ px: 2.5, py: 12, textAlign: 'center' }}>
+                    <Box sx={{ color: 'text.disabled' }}>
+                      <svg
+                        style={{
+                          width: 48,
+                          height: 48,
+                          margin: '0 auto',
+                          marginBottom: 12,
+                          display: 'block',
+                          color: 'rgba(0, 0, 0, 0.26)',
+                        }}
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"
+                        />
                       </svg>
-                      <p className="text-base font-medium text-slate-600">No se encontraron usuarios</p>
-                      <p className="text-sm text-slate-500 mt-1">Intenta con otros términos de búsqueda</p>
-                    </div>
-                  </td>
-                </tr>
+                      <Typography variant="body1" fontWeight={500} color="text.secondary">
+                        No se encontraron usuarios
+                      </Typography>
+                      <Typography variant="body2" color="text.disabled" sx={{ mt: 0.5 }}>
+                        Intenta con otros términos de búsqueda
+                      </Typography>
+                    </Box>
+                  </Box>
+                </Box>
               )}
-            </tbody>
-          </table>
-        </div>
+            </Box>
+          </Box>
+        </Box>
 
         {/* Table Footer */}
-        <div className="bg-slate-50 px-5 py-3 border-t border-gray-200">
-          <div className="flex items-center justify-between">
-            <p className="text-xs text-slate-600">
-              Mostrando <span className="font-semibold">{filteredUsers.length}</span> de{' '}
-              <span className="font-semibold">{users.length}</span> registros
-            </p>
-            <div className="flex space-x-2">
-              <button className="px-3 py-1.5 border border-gray-300 rounded text-xs font-medium text-slate-700 hover:bg-slate-100 transition-colors">
-                Anterior
-              </button>
-              <button className="px-3 py-1.5 border border-gray-300 rounded text-xs font-medium text-slate-700 hover:bg-slate-100 transition-colors">
-                Siguiente
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+        <Box
+          sx={{
+            bgcolor: 'grey.50',
+            px: 2.5,
+            py: 1.5,
+            borderTop: '1px solid',
+            borderColor: 'divider',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between'
+          }}
+        >
+          <Typography variant="caption" color="text.secondary">
+            Mostrando <Box component="span" sx={{ fontWeight: 600 }}>{filteredUsers.length}</Box> de{' '}
+            <Box component="span" sx={{ fontWeight: 600 }}>{users.length}</Box> registros
+          </Typography>
+          <Stack direction="row" spacing={1}>
+            <Button
+              variant="outlined"
+              size="small"
+              startIcon={<ChevronLeft />}
+              sx={{
+                fontSize: '0.75rem',
+                textTransform: 'none'
+              }}
+            >
+              Anterior
+            </Button>
+            <Button
+              variant="outlined"
+              size="small"
+              endIcon={<ChevronRight />}
+              sx={{
+                fontSize: '0.75rem',
+                textTransform: 'none'
+              }}
+            >
+              Siguiente
+            </Button>
+          </Stack>
+        </Box>
+      </Paper>
+    </Box>
   );
 };
 

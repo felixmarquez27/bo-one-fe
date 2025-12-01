@@ -6,8 +6,6 @@ import {
     Typography,
     TextField,
     Button,
-    Checkbox,
-    FormControlLabel,
     Link,
     Stack,
     Grid,
