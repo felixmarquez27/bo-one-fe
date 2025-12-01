@@ -17,9 +17,9 @@
             "@apps/*": [
                 "apps/*/src"
             ],
-            "@packages/ui/*": [
-                "packages/ui/src/*"
-            ],
+            "@bo-one/design-system": [
+                "packages/design-system/src/index.ts"
+            ]
         }
     },
     "include": [

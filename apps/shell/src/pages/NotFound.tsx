@@ -1,23 +1,36 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link as RouterLink } from 'react-router-dom';
+import { Box, Typography, Button, Container } from '@bo-one/design-system';
 
 export const NotFound: React.FC = () => {
   return (
-    <div className="min-h-[60vh] flex items-center justify-center">
-      <div className="text-center">
-        <h1 className="text-9xl font-bold text-slate-200">404</h1>
-        <h2 className="text-2xl font-semibold text-slate-900 mt-4">Página no encontrada</h2>
-        <p className="text-slate-600 mt-2 mb-8">
+    <Container maxWidth="sm">
+      <Box sx={{
+        minHeight: '60vh',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        textAlign: 'center'
+      }}>
+        <Typography variant="h1" fontWeight="bold" sx={{ fontSize: '8rem', color: 'action.disabled' }}>
+          404
+        </Typography>
+        <Typography variant="h4" fontWeight="600" gutterBottom>
+          Página no encontrada
+        </Typography>
+        <Typography variant="body1" color="text.secondary" sx={{ mb: 4 }}>
           La página que buscas no existe o ha sido movida.
-        </p>
-        <Link
+        </Typography>
+        <Button
+          component={RouterLink}
           to="/dashboard"
-          className="inline-block px-6 py-3 bg-slate-800 text-white text-sm font-medium rounded hover:bg-slate-900 transition-colors"
+          variant="contained"
+          size="large"
         >
           Volver al Dashboard
-        </Link>
-      </div>
-    </div>
+        </Button>
+      </Box>
+    </Container>
   );
 };
-

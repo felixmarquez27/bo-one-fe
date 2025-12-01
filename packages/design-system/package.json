@@ -1,0 +1,36 @@
+{
+    "name": "@bo-one/design-system",
+    "version": "1.0.0",
+    "description": "Design System basado en Material UI para BO ONE",
+    "main": "./dist/index.js",
+    "module": "./dist/index.mjs",
+    "types": "./dist/index.d.ts",
+    "exports": {
+        ".": {
+            "types": "./dist/index.d.ts",
+            "import": "./dist/index.mjs",
+            "require": "./dist/index.js"
+        },
+        "./theme": {
+            "types": "./dist/theme.d.ts",
+            "import": "./dist/theme.mjs",
+            "require": "./dist/theme.js"
+        }
+    },
+    "scripts": {
+        "build": "tsup",
+        "dev": "tsup --watch",
+        "type-check": "tsc --noEmit"
+    },
+    "peerDependencies": {
+        "@emotion/react": "^11.14.0",
+        "@emotion/styled": "^11.14.1",
+        "@mui/material": "^7.3.5",
+        "@mui/icons-material": "^7.3.5",
+        "react": "^19.2.0",
+        "react-dom": "^19.2.0"
+    },
+    "devDependencies": {
+        "tsup": "^8.0.1"
+    }
+}

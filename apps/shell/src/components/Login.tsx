@@ -1,203 +1,184 @@
 import React, { useState } from 'react';
+import {
+    Box,
+    Card,
+    CardContent,
+    Typography,
+    TextField,
+    Button,
+    Checkbox,
+    FormControlLabel,
+    Link,
+    Stack,
+    Grid,
+    InputAdornment,
+    IconButton,
+    Alert,
+    CircularProgress,
+    Visibility,
+    VisibilityOff,
+} from '@bo-one/design-system';
 
 interface LoginProps {
-  onLoginSuccess?: () => void;
+    onLoginSuccess?: () => void;
 }
 
 export const Login: React.FC<LoginProps> = ({ onLoginSuccess }) => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [showPassword, setShowPassword] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState('');
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setError('');
-    setIsLoading(true);
+    const handleClickShowPassword = () => setShowPassword((show) => !show);
+    const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
+        event.preventDefault();
+    };
 
-    try {
-      // Simulación de autenticación
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        setError('');
+        setIsLoading(true);
 
-      if (email && password) {
-        console.log('Inicio de sesión exitoso:', { email });
-        onLoginSuccess?.();
-      } else {
-        setError('Por favor, completa todos los campos');
-      }
-    } catch (err) {
-      setError('Error al iniciar sesión. Por favor, intenta de nuevo.');
-    } finally {
-      setIsLoading(false);
-    }
-  };
+        try {
+            // Simulación de autenticación
+            await new Promise((resolve) => setTimeout(resolve, 1000));
 
-  return (
-    <div className="min-h-screen flex items-center justify-center bg-slate-100 px-4 py-8">
-      <div className="w-full max-w-md">
-        {/* Logo o Título Principal */}
-        <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-16 h-16 bg-slate-800 rounded mb-4">
-            <div className="w-8 h-8 border-4 border-gray-300 rounded"></div>
-          </div>
-          <h1 className="text-3xl font-bold text-slate-900 mb-1">BO-ONE</h1>
-          <p className="text-slate-600 text-sm">Enterprise Management System</p>
-        </div>
+            if (email && password) {
+                console.log('Inicio de sesión exitoso:', { email });
+                onLoginSuccess?.();
+            } else {
+                setError('Por favor, completa todos los campos');
+            }
+        } catch (err) {
+            setError('Error al iniciar sesión. Por favor, intenta de nuevo.');
+        } finally {
+            setIsLoading(false);
+        }
+    };
 
-        {/* Card de Login */}
-        <div className="bg-white rounded shadow-sm border border-gray-200 overflow-hidden">
-          {/* Header */}
-          <div className="bg-slate-800 px-8 py-5 border-b border-slate-700">
-            <h2 className="text-xl font-semibold text-white text-center">
-              Inicio de Sesión
-            </h2>
-            <p className="text-slate-300 text-center mt-1 text-sm">
-              Ingrese sus credenciales corporativas
-            </p>
-          </div>
+    return (
+        <Box sx={{
+            minHeight: '100vh',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            bgcolor: '#eef2f6', // Light grey background similar to reference
+            p: 2
+        }}>
+            <Card sx={{
+                maxWidth: 475,
+                width: '100%',
+                borderRadius: 3,
+                boxShadow: '0px 2px 1px -1px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14), 0px 1px 3px 0px rgba(0,0,0,0.12)',
+                overflow: 'visible' // Allow content to flow if needed
+            }}>
+                <CardContent sx={{ p: { xs: 3, sm: 5 } }}>
+                    <Grid container spacing={3} direction="column" alignItems="center">
+                        {/* Logo */}
+                        <Grid>
+                            <Box sx={{ mb: 2, display: 'flex', justifyContent: 'center' }}>
+                                <img
+                                    src="/assets/claro-tv.png"
+                                    alt="Logo"
+                                    style={{ height: 70 }}
+                                />
+                            </Box>
+                        </Grid>
 
-          {/* Form */}
-          <form onSubmit={handleSubmit} className="px-8 py-8">
-            <div className="space-y-5">
-              {/* Email Input */}
-              <div>
-                <label
-                  htmlFor="email"
-                  className="block text-sm font-medium text-gray-700 mb-1.5"
-                >
-                  Usuario / Correo Corporativo 2
-                </label>
-                <input
-                  id="email"
-                  type="email"
-                  placeholder="usuario@empresa.com"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
-                  disabled={isLoading}
-                  className="w-full px-3 py-2.5 text-sm border border-gray-300 rounded focus:ring-1 focus:ring-slate-500 focus:border-slate-500 outline-none transition-colors disabled:bg-gray-50 disabled:cursor-not-allowed"
-                />
-              </div>
+                        {/* Welcome Text */}
+                        <Grid size={12} sx={{ width: '100%', textAlign: 'center' }}>
 
-              {/* Password Input */}
-              <div>
-                <label
-                  htmlFor="password"
-                  className="block text-sm font-medium text-gray-700 mb-1.5"
-                >
-                  Contraseña
-                </label>
-                <input
-                  id="password"
-                  type="password"
-                  placeholder="••••••••"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  required
-                  disabled={isLoading}
-                  className="w-full px-3 py-2.5 text-sm border border-gray-300 rounded focus:ring-1 focus:ring-slate-500 focus:border-slate-500 outline-none transition-colors disabled:bg-gray-50 disabled:cursor-not-allowed"
-                />
-              </div>
+                            <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
+                                Ingrese sus credenciales para continuar
+                            </Typography>
+                        </Grid>
 
-              {/* Error Message */}
-              {error && (
-                <div className="bg-red-50 border border-red-200 text-red-700 px-3 py-2.5 rounded text-sm">
-                  {error}
-                </div>
-              )}
+                        {/* Form */}
+                        <Grid size={12} sx={{ width: '100%' }}>
+                            <form onSubmit={handleSubmit}>
+                                <Stack spacing={3}>
+                                    <TextField
+                                        id="email"
+                                        label="Email Address / Username"
+                                        type="email"
+                                        value={email}
+                                        onChange={(e) => setEmail(e.target.value)}
+                                        required
+                                        disabled={isLoading}
+                                        fullWidth
+                                        variant="outlined"
+                                        sx={{ bgcolor: '#fafafa' }}
+                                    />
 
-              {/* Remember Me & Forgot Password */}
-              <div className="flex items-center justify-between text-sm">
-                <label className="flex items-center">
-                  <input
-                    type="checkbox"
-                    className="w-4 h-4 text-slate-600 border-gray-300 rounded focus:ring-slate-500"
-                  />
-                  <span className="ml-2 text-gray-600">
-                    Mantener sesión activa
-                  </span>
-                </label>
-                <a
-                  href="#"
-                  className="text-slate-700 hover:text-slate-900 font-medium"
-                >
-                  Recuperar acceso
-                </a>
-              </div>
+                                    <TextField
+                                        id="password"
+                                        label="Password"
+                                        type={showPassword ? 'text' : 'password'}
+                                        value={password}
+                                        onChange={(e) => setPassword(e.target.value)}
+                                        required
+                                        disabled={isLoading}
+                                        fullWidth
+                                        variant="outlined"
+                                        sx={{ bgcolor: '#fafafa' }}
+                                        InputProps={{
+                                            endAdornment: (
+                                                <InputAdornment position="end">
+                                                    <IconButton
+                                                        aria-label="toggle password visibility"
+                                                        onClick={handleClickShowPassword}
+                                                        onMouseDown={handleMouseDownPassword}
+                                                        edge="end"
+                                                    >
+                                                        {showPassword ? <VisibilityOff /> : <Visibility />}
+                                                    </IconButton>
+                                                </InputAdornment>
+                                            ),
+                                        }}
+                                    />
 
-              {/* Submit Button */}
-              <button
-                type="submit"
-                disabled={isLoading}
-                className="w-full bg-slate-800 text-white py-2.5 px-4 rounded text-sm font-medium hover:bg-slate-900 focus:outline-none focus:ring-2 focus:ring-slate-500 focus:ring-offset-2 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                {isLoading ? (
-                  <span className="flex items-center justify-center">
-                    <svg
-                      className="animate-spin -ml-1 mr-3 h-4 w-4 text-white"
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                    >
-                      <circle
-                        className="opacity-25"
-                        cx="12"
-                        cy="12"
-                        r="10"
-                        stroke="currentColor"
-                        strokeWidth="4"
-                      />
-                      <path
-                        className="opacity-75"
-                        fill="currentColor"
-                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                      />
-                    </svg>
-                    Verificando credenciales...
-                  </span>
-                ) : (
-                  'Iniciar Sesión'
-                )}
-              </button>
+                                    {error && (
+                                        <Alert severity="error">
+                                            {error}
+                                        </Alert>
+                                    )}
 
-              {/* Separador */}
-              <div className="relative my-6">
-                <div className="absolute inset-0 flex items-center">
-                  <div className="w-full border-t border-gray-300"></div>
-                </div>
-                <div className="relative flex justify-center text-sm">
-                  <span className="px-2 bg-white text-gray-500">O continúa con</span>
-                </div>
-              </div>
+                                    <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                        <Link href="#" variant="subtitle1" underline="hover" color="primary" fontWeight="bold" fontSize="0.75rem">
+                                            ¿Olvidaste tu contraseña?
+                                        </Link>
+                                    </Box>
 
-              {/* Microsoft Login Button */}
-              <button
-                type="button"
-                onClick={() => window.location.href = 'http://localhost:8000/api/auth/azure'}
-                className="w-full flex items-center justify-center gap-3 bg-white border border-gray-300 text-slate-700 py-2.5 px-4 rounded text-sm font-medium hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-slate-500 focus:ring-offset-2 transition-colors"
-              >
-                <svg width="20" height="20" viewBox="0 0 24 24">
-                  <path fill="currentColor" d="M11.4 24H0V12.6h11.4V24zM24 24H12.6V12.6H24V24zM11.4 11.4H0V0h11.4v11.4zM24 11.4H12.6V0H24v11.4z" />
-                </svg>
-                Iniciar sesión con Microsoft
-              </button>
-            </div>
-          </form>
+                                    <Button
+                                        type="submit"
+                                        variant="contained"
+                                        color="primary"
+                                        size="large"
+                                        fullWidth
+                                        disabled={isLoading}
+                                        sx={{
+                                            py: 1.5,
+                                            fontSize: '1rem',
+                                            textTransform: 'none',
+                                            borderRadius: 2,
+                                            boxShadow: 'none',
+                                            '&:hover': {
+                                                boxShadow: 'none'
+                                            }
+                                        }}
+                                        startIcon={isLoading ? <CircularProgress size={20} color="inherit" /> : null}
+                                    >
+                                        {isLoading ? 'Iniciando Sesión...' : 'Iniciar Sesión'}
+                                    </Button>
 
-          {/* Footer */}
-          <div className="px-8 py-4 bg-gray-50 border-t border-gray-200">
-            <p className="text-center text-xs text-gray-500">
-              Acceso restringido solo para personal autorizado
-            </p>
-          </div>
-        </div>
 
-        {/* Footer Info */}
-        <div className="mt-6 text-center text-xs text-gray-500">
-          <p>© 2025 BO-ONE Enterprise System. Todos los derechos reservados.</p>
-        </div>
-      </div>
-    </div>
-  );
+                                </Stack>
+                            </form>
+                        </Grid>
+                    </Grid>
+                </CardContent>
+            </Card>
+        </Box>
+    );
 };
-

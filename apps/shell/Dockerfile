@@ -6,11 +6,6 @@ WORKDIR /app
 # Copiar archivos de configuración raíz
 COPY package*.json ./
 COPY tsconfig.json ./
-COPY postcss.config.mjs ./
-COPY tailwind.config.js ./
-
-# Copiar estilos globales
-COPY styles ./styles
 
 # Copiar configuración y código de shell
 COPY apps/shell/package*.json ./apps/shell/

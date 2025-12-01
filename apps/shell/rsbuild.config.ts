@@ -7,6 +7,25 @@ export default defineConfig({
   server: {
     port: 2000,
   },
+
+  html: {
+    title: 'BO One - Sistema de Gestión Claro TV+',
+    favicon: './public/assets/favicon/favicon-196x196.png',
+    meta: {
+      description: 'Panel de administración para el sistema de gestión BO One',
+      author: 'Gestores Team',
+      // Open Graph meta tags para redes sociales
+      'og:title': 'BO One - Sistema de Gestión Claro TV+',
+      'og:description': 'Panel de administración para el sistema de gestión BO One',
+      'og:type': 'website'
+    },
+  },
+
+  source: {
+    alias: {
+      '@bo-one/design-system': path.resolve(__dirname, '../../packages/design-system/src'),
+    },
+  },
   plugins: [
     pluginReact(),
     pluginModuleFederation({
@@ -15,9 +34,11 @@ export default defineConfig({
         users: 'users@http://localhost:2001/mf-manifest.json',
       },
       shared: {
-        react: { singleton: true, eager: true, requiredVersion: '^19.2.0' },
-        'react-dom': { singleton: true, eager: true, requiredVersion: '^19.2.0' },
+        react: { singleton: true, eager: true },
+        'react-dom': { singleton: true, eager: true },
+        '@bo-one/design-system': { singleton: true, eager: true },
       },
+      manifest: false,
     }),
 
   ],

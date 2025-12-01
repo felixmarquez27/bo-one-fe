@@ -6,16 +6,21 @@ WORKDIR /app
 # Copiar archivos de configuración
 COPY package*.json ./
 COPY tsconfig.json ./
-COPY postcss.config.mjs ./
-COPY tailwind.config.js ./
 
-# Copiar estilos y types
-COPY styles ./styles
+# Copiar types
 COPY types ./types
 
 # Copiar configuración de shell
 COPY apps/shell/package*.json ./apps/shell/
 COPY apps/shell/rsbuild.config.ts ./apps/shell/
+COPY apps/users/package.json ./apps/users/
+COPY apps/shell/public ./apps/shell/public
+
+# Copiar configuración del design system para que el workspace funcione
+COPY packages/design-system/package.json ./packages/design-system/
+COPY packages/design-system/src ./packages/design-system/src
+COPY packages/design-system/tsconfig.json ./packages/design-system/
+
 
 # Instalar dependencias desde la raíz (workspace)
 RUN npm ci --legacy-peer-deps
